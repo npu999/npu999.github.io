@@ -1,0 +1,248 @@
+/* ========================================
+   Reset & Base Styles
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+/* 배경 이미지 변경하는 곳 */
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-attachment: fixed;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* ========================================
+   Container & Layout
+   ======================================== */
+.container {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ========================================
+   Header & Profile Section
+   ======================================== */
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 4px solid white;
+    transition: transform 0.3s ease;
+}
+
+.profile-img:hover {
+    transform: scale(1.05);
+}
+
+.profile-name {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    color: white;
+    letter-spacing: 0.5px;
+    text-transform: lowercase;
+}
+
+/* ========================================
+   Main Links Section
+   ======================================== */
+.main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.links-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.link-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 16px 24px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.link-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.link-button:hover::before {
+    left: 100%;
+}
+
+.link-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    background-color: white;
+}
+
+.link-button:active {
+    transform: translateY(0);
+}
+
+.link-text {
+    position: relative;
+    z-index: 1;
+}
+
+/* ========================================
+   Footer Section
+   ======================================== */
+.footer {
+    width: 100%;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 12px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ========================================
+   Animations
+   ======================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.link-button {
+    animation: fadeIn 0.6s ease-in-out;
+    animation-fill-mode: both;
+}
+
+.link-button:nth-child(1) { animation-delay: 0.1s; }
+.link-button:nth-child(2) { animation-delay: 0.2s; }
+.link-button:nth-child(3) { animation-delay: 0.3s; }
+.link-button:nth-child(4) { animation-delay: 0.4s; }
+.link-button:nth-child(5) { animation-delay: 0.5s; }
+.link-button:nth-child(6) { animation-delay: 0.6s; }
+
+/* ========================================
+   Mobile First & Responsive Design
+   ======================================== */
+@media (max-width: 480px) {
+    .profile-img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 16px;
+    }
+
+    .profile-name {
+        font-size: 24px;
+    }
+
+    .link-button {
+        padding: 14px 20px;
+        font-size: 15px;
+        border-radius: 10px;
+    }
+
+    .header {
+        margin-bottom: 32px;
+    }
+
+    .main {
+        gap: 10px;
+    }
+
+    .links-section {
+        gap: 10px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .container {
+        max-width: 480px;
+    }
+
+    .profile-img {
+        width: 130px;
+        height: 130px;
+    }
+
+    .profile-name {
+        font-size: 30px;
+    }
+}
+
+/* ========================================
+   Accessibility & Focus Styles
+   ======================================== */
+.link-button:focus-visible {
+    outline: 3px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+/* ========================================
+   Dark Mode Support (Optional)
+   ======================================== */
+@media (prefers-color-scheme: dark) {
+    .link-button {
+        background-color: rgba(50, 50, 50, 0.9);
+        color: #f0f0f0;
+    }
+
+    .link-button:hover {
+        background-color: rgba(80, 80, 80, 0.95);
+    }
+}
