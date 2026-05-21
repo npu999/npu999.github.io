@@ -1,6 +1,6 @@
 /**
  * National Pigeon Unity - Main JavaScript
- * Minimal & Clean - Link tracking and keyboard navigation
+ * Minimal & Clean - Link tracking and keyboard navigation + Dynamic Rainbow Gradient
  */
 
 (function() {
@@ -13,12 +13,62 @@
         enableDarkMode: true,
     };
 
+    // Rainbow colors (빨주노초파남보)
+    const RAINBOW_COLORS = [
+        ['#FF0000', '#FF7F00'], // Red to Orange
+        ['#FF7F00', '#FFFF00'], // Orange to Yellow
+        ['#FFFF00', '#00FF00'], // Yellow to Green
+        ['#00FF00', '#0000FF'], // Green to Blue
+        ['#0000FF', '#4B0082'], // Blue to Indigo
+        ['#4B0082', '#9400D3'], // Indigo to Violet
+        ['#9400D3', '#FF0000'], // Violet to Red
+    ];
+
     // ===== Initialize =====
     function init() {
         setupLinkTracking();
         setupKeyboardNavigation();
         setupDarkMode();
         setupAccessibility();
+        setupDynamicGradient();
+    }
+
+    // ===== Dynamic Rainbow Gradient =====
+    function setupDynamicGradient() {
+        function getRandomGradient() {
+            const colorPair = RAINBOW_COLORS[Math.floor(Math.random() * RAINBOW_COLORS.length)];
+            const angle = Math.floor(Math.random() * 360);
+            return `linear-gradient(${angle}deg, ${colorPair[0]} 0%, ${colorPair[1]} 100%)`;
+        }
+
+        function updateBackground() {
+            document.body.style.background = getRandomGradient();
+            document.body.style.backgroundAttachment = 'fixed';
+        }
+
+        // Update on mouse move
+        document.addEventListener('mousemove', () => {
+            // Update gradient every 500ms while moving
+            if (!window.gradientUpdateTimeout) {
+                updateBackground();
+                window.gradientUpdateTimeout = setTimeout(() => {
+                    window.gradientUpdateTimeout = null;
+                }, 500);
+            }
+        });
+
+        // Update on touch move (mobile)
+        document.addEventListener('touchmove', () => {
+            if (!window.gradientUpdateTimeout) {
+                updateBackground();
+                window.gradientUpdateTimeout = setTimeout(() => {
+                    window.gradientUpdateTimeout = null;
+                }, 500);
+            }
+        });
+
+        // Initial gradient
+        updateBackground();
     }
 
     // ===== Link Click Tracking =====
