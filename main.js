@@ -24,6 +24,14 @@
         ['#9400D3', '#FF0000'], // Violet to Red
     ];
 
+    // Gradient animation state
+    let gradientState = {
+        currentColors: ['#FF0000', '#FF7F00'],
+        currentAngle: 0,
+        isAnimating: false,
+        animationFrameId: null
+    };
+
     // ===== Initialize =====
     function init() {
         setupLinkTracking();
@@ -35,40 +43,127 @@
 
     // ===== Dynamic Rainbow Gradient =====
     function setupDynamicGradient() {
-        function getRandomGradient() {
-            const colorPair = RAINBOW_COLORS[Math.floor(Math.random() * RAINBOW_COLORS.length)];
-            const angle = Math.floor(Math.random() * 360);
-            return `linear-gradient(${angle}deg, ${colorPair[0]} 0%, ${colorPair[1]} 100%)`;
-        }
-
-        function updateBackground() {
-            document.body.style.background = getRandomGradient();
+        function setGradient(colors, angle) {
+            document.body.style.background = `linear-gradient(${angle}deg, ${colors[0]} 0%, ${colors[1]} 100%)`;
             document.body.style.backgroundAttachment = 'fixed';
         }
 
-        // Update on mouse move
+        function getRandomGradient() {
+            const colorPair = RAINBOW_COLORS[Math.floor(Math.random() * RAINBOW_COLORS.length)];
+            const angle = Math.floor(Math.random() * 360);
+            return { colors: colorPair, angle };
+        }
+
+        function smoothGradientAnimation() {
+            const startTime = Date.now();
+            const duration = 8000; // 8초에 걸쳐 부드럽게 변경
+            const startColors = gradientState.currentColors;
+            const startAngle = gradientState.currentAngle;
+            const nextGradient = getRandomGradient();
+            const targetColors = nextGradient.colors;
+            const targetAngle = nextGradient.angle;
+
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // 색상 보간 (RGB 값을 직접 계산하는 방식으로 변경)
+                const currentColors = interpolateColors(startColors, targetColors, progress);
+                const currentAngle = startAngle + (targetAngle - startAngle) * progress;
+
+                gradientState.currentColors = currentColors;
+                gradientState.currentAngle = currentAngle;
+
+                setGradient(currentColors, currentAngle);
+
+                if (progress < 1) {
+                    gradientState.animationFrameId = requestAnimationFrame(animate);
+                } else {
+                    // 다음 애니메이션 시작
+                    gradientState.animationFrameId = setTimeout(smoothGradientAnimation, 500);
+                }
+            }
+
+            animate();
+        }
+
+        function interpolateColors(color1, color2, progress) {
+            const rgb1 = hexToRgb(color1);
+            const rgb2 = hexToRgb(color2);
+
+            const r = Math.round(rgb1.r + (rgb2.r - rgb1.r) * progress);
+            const g = Math.round(rgb1.g + (rgb2.g - rgb1.g) * progress);
+            const b = Math.round(rgb1.b + (rgb2.b - rgb1.b) * progress);
+
+            return [rgbToHex(r, g, b), color2];
+        }
+
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : { r: 0, g: 0, b: 0 };
+        }
+
+        function rgbToHex(r, g, b) {
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        }
+
+        function handleUserInteraction() {
+            // 현재 애니메이션 취소
+            if (gradientState.animationFrameId) {
+                cancelAnimationFrame(gradientState.animationFrameId);
+                clearTimeout(gradientState.animationFrameId);
+            }
+
+            // 즉시 새로운 랜덤 그라디언트 적용
+            const newGradient = getRandomGradient();
+            gradientState.currentColors = newGradient.colors;
+            gradientState.currentAngle = newGradient.angle;
+            setGradient(newGradient.colors, newGradient.angle);
+
+            // 사용자 상호작용이 끝난 후 부드러운 애니메이션 재개
+            gradientState.isAnimating = false;
+            setTimeout(() => {
+                if (!gradientState.isAnimating) {
+                    smoothGradientAnimation();
+                }
+            }, 500);
+        }
+
+        // 마우스 이동 감지
+        let lastMouseMove = 0;
         document.addEventListener('mousemove', () => {
-            // Update gradient every 500ms while moving
-            if (!window.gradientUpdateTimeout) {
-                updateBackground();
-                window.gradientUpdateTimeout = setTimeout(() => {
-                    window.gradientUpdateTimeout = null;
-                }, 500);
+            const now = Date.now();
+            if (now - lastMouseMove > 300) { // 300ms 간격으로 감지
+                lastMouseMove = now;
+                gradientState.isAnimating = true;
+                handleUserInteraction();
             }
         });
 
-        // Update on touch move (mobile)
+        // 터치 이동 감지
+        let lastTouchMove = 0;
         document.addEventListener('touchmove', () => {
-            if (!window.gradientUpdateTimeout) {
-                updateBackground();
-                window.gradientUpdateTimeout = setTimeout(() => {
-                    window.gradientUpdateTimeout = null;
-                }, 500);
+            const now = Date.now();
+            if (now - lastTouchMove > 300) {
+                lastTouchMove = now;
+                gradientState.isAnimating = true;
+                handleUserInteraction();
             }
         });
 
-        // Initial gradient
-        updateBackground();
+        // 클릭/탭 감지
+        document.addEventListener('click', () => {
+            gradientState.isAnimating = true;
+            handleUserInteraction();
+        });
+
+        // 초기 그라디언트 설정 및 애니메이션 시작
+        setGradient(gradientState.currentColors, gradientState.currentAngle);
+        smoothGradientAnimation();
     }
 
     // ===== Link Click Tracking =====
