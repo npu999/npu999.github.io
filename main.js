@@ -31,6 +31,7 @@
     let gradientState = {
         currentColors: ['#D84E4E', '#D97D3A'],
         currentAngle: 0,
+        targetAngle: 0,
         isAnimating: false,
         animationFrameId: null
     };
@@ -51,67 +52,39 @@
             document.body.style.backgroundAttachment = 'fixed';
         }
 
-        function getRandomGradient() {
-            const colorPair = RAINBOW_COLORS[Math.floor(Math.random() * RAINBOW_COLORS.length)];
-            const angle = Math.floor(Math.random() * 360);
-            return { colors: colorPair, angle };
+        function getRandomAngle() {
+            return Math.floor(Math.random() * 360);
         }
 
-        function smoothGradientAnimation() {
+        function getRandomColors() {
+            return RAINBOW_COLORS[Math.floor(Math.random() * RAINBOW_COLORS.length)];
+        }
+
+        function smoothAngleAnimation() {
             const startTime = Date.now();
-            const duration = 8000; // 8초에 걸쳐 부드럽게 변경
-            const startColors = gradientState.currentColors;
+            const duration = 8000; // 8초에 걸쳐 부드럽게 각도만 변경
             const startAngle = gradientState.currentAngle;
-            const nextGradient = getRandomGradient();
-            const targetColors = nextGradient.colors;
-            const targetAngle = nextGradient.angle;
+            const targetAngle = getRandomAngle();
+            gradientState.targetAngle = targetAngle;
 
             function animate() {
                 const elapsed = Date.now() - startTime;
                 const progress = Math.min(elapsed / duration, 1);
                 
-                // 색상 보간 (RGB 값을 직접 계산하는 방식)
-                const currentColors = interpolateColors(startColors, targetColors, progress);
                 const currentAngle = startAngle + (targetAngle - startAngle) * progress;
-
-                gradientState.currentColors = currentColors;
                 gradientState.currentAngle = currentAngle;
 
-                setGradient(currentColors, currentAngle);
+                setGradient(gradientState.currentColors, currentAngle);
 
                 if (progress < 1) {
                     gradientState.animationFrameId = requestAnimationFrame(animate);
                 } else {
                     // 다음 애니메이션 시작
-                    gradientState.animationFrameId = setTimeout(smoothGradientAnimation, 500);
+                    gradientState.animationFrameId = setTimeout(smoothAngleAnimation, 500);
                 }
             }
 
             animate();
-        }
-
-        function interpolateColors(color1, color2, progress) {
-            const rgb1 = hexToRgb(color1);
-            const rgb2 = hexToRgb(color2);
-
-            const r = Math.round(rgb1.r + (rgb2.r - rgb1.r) * progress);
-            const g = Math.round(rgb1.g + (rgb2.g - rgb1.g) * progress);
-            const b = Math.round(rgb1.b + (rgb2.b - rgb1.b) * progress);
-
-            return [rgbToHex(r, g, b), color2];
-        }
-
-        function hexToRgb(hex) {
-            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return result ? {
-                r: parseInt(result[1], 16),
-                g: parseInt(result[2], 16),
-                b: parseInt(result[3], 16)
-            } : { r: 0, g: 0, b: 0 };
-        }
-
-        function rgbToHex(r, g, b) {
-            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
         }
 
         function handleUserInteraction() {
@@ -121,17 +94,16 @@
                 clearTimeout(gradientState.animationFrameId);
             }
 
-            // 즉시 새로운 랜덤 그라디언트 적용
-            const newGradient = getRandomGradient();
-            gradientState.currentColors = newGradient.colors;
-            gradientState.currentAngle = newGradient.angle;
-            setGradient(newGradient.colors, newGradient.angle);
+            // 즉시 새로운 랜덤 색상 적용 (각도는 현재 각도 유지)
+            const newColors = getRandomColors();
+            gradientState.currentColors = newColors;
+            setGradient(newColors, gradientState.currentAngle);
 
             // 사용자 상호작용이 끝난 후 부드러운 애니메이션 재개
             gradientState.isAnimating = false;
             setTimeout(() => {
                 if (!gradientState.isAnimating) {
-                    smoothGradientAnimation();
+                    smoothAngleAnimation();
                 }
             }, 500);
         }
@@ -144,7 +116,7 @@
 
         // 초기 그라디언트 설정 및 애니메이션 시작
         setGradient(gradientState.currentColors, gradientState.currentAngle);
-        smoothGradientAnimation();
+        smoothAngleAnimation();
     }
 
     // ===== Link Click Tracking =====
