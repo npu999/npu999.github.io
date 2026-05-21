@@ -81,9 +81,6 @@
 
                 if (progress < 1) {
                     gradientState.animationFrameId = requestAnimationFrame(animate);
-                } else {
-                    // 다음 애니메이션 시작
-                    gradientState.animationFrameId = setTimeout(smoothGradientAnimation, 500);
                 }
             }
 
@@ -126,47 +123,15 @@
             gradientState.currentColors = newGradient.colors;
             gradientState.currentAngle = newGradient.angle;
             setGradient(newGradient.colors, newGradient.angle);
-
-            // 사용자 상호작용이 끝난 후 부드러운 애니메이션 재개
-            gradientState.isAnimating = false;
-            setTimeout(() => {
-                if (!gradientState.isAnimating) {
-                    smoothGradientAnimation();
-                }
-            }, 500);
         }
 
-        // 마우스 이동 감지
-        let lastMouseMove = 0;
-        document.addEventListener('mousemove', () => {
-            const now = Date.now();
-            if (now - lastMouseMove > 300) { // 300ms 간격으로 감지
-                lastMouseMove = now;
-                gradientState.isAnimating = true;
-                handleUserInteraction();
-            }
-        });
-
-        // 터치 이동 감지
-        let lastTouchMove = 0;
-        document.addEventListener('touchmove', () => {
-            const now = Date.now();
-            if (now - lastTouchMove > 300) {
-                lastTouchMove = now;
-                gradientState.isAnimating = true;
-                handleUserInteraction();
-            }
-        });
-
-        // 클릭/탭 감지
+        // 클릭/탭 감지만 유지
         document.addEventListener('click', () => {
-            gradientState.isAnimating = true;
             handleUserInteraction();
         });
 
-        // 초기 그라��언트 설정 및 애니메이션 시작
+        // 초기 그라디언트 설정
         setGradient(gradientState.currentColors, gradientState.currentAngle);
-        smoothGradientAnimation();
     }
 
     // ===== Link Click Tracking =====
