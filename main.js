@@ -81,6 +81,9 @@
 
                 if (progress < 1) {
                     gradientState.animationFrameId = requestAnimationFrame(animate);
+                } else {
+                    // 다음 애니메이션 시작
+                    gradientState.animationFrameId = setTimeout(smoothGradientAnimation, 500);
                 }
             }
 
@@ -123,15 +126,25 @@
             gradientState.currentColors = newGradient.colors;
             gradientState.currentAngle = newGradient.angle;
             setGradient(newGradient.colors, newGradient.angle);
+
+            // 사용자 상호작용이 끝난 후 부드러운 애니메이션 재개
+            gradientState.isAnimating = false;
+            setTimeout(() => {
+                if (!gradientState.isAnimating) {
+                    smoothGradientAnimation();
+                }
+            }, 500);
         }
 
         // 클릭/탭 감지만 유지
         document.addEventListener('click', () => {
+            gradientState.isAnimating = true;
             handleUserInteraction();
         });
 
-        // 초기 그라디언트 설정
+        // 초기 그라디언트 설정 및 애니메이션 시작
         setGradient(gradientState.currentColors, gradientState.currentAngle);
+        smoothGradientAnimation();
     }
 
     // ===== Link Click Tracking =====
