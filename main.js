@@ -13,20 +13,23 @@
         enableDarkMode: true,
     };
 
-    // Rainbow colors (빨주노초파남보)
+    // Soft, Premium Rainbow colors (살짝 톤다운된 고급 색상 팔레트)
     const RAINBOW_COLORS = [
-        ['#FF0000', '#FF7F00'], // Red to Orange
-        ['#FF7F00', '#FFFF00'], // Orange to Yellow
-        ['#FFFF00', '#00FF00'], // Yellow to Green
-        ['#00FF00', '#0000FF'], // Green to Blue
-        ['#0000FF', '#4B0082'], // Blue to Indigo
-        ['#4B0082', '#9400D3'], // Indigo to Violet
-        ['#9400D3', '#FF0000'], // Violet to Red
+        ['#D84E4E', '#D97D3A'], // Soft Red to Soft Orange
+        ['#D97D3A', '#D4B84F'], // Soft Orange to Soft Yellow
+        ['#D4B84F', '#5FB55B'], // Soft Yellow to Soft Green
+        ['#5FB55B', '#4A90A4'], // Soft Green to Soft Blue
+        ['#4A90A4', '#6B5B95'], // Soft Blue to Soft Indigo
+        ['#6B5B95', '#9B7B9E'], // Soft Indigo to Soft Violet
+        ['#9B7B9E', '#D84E4E'], // Soft Violet to Soft Red
+        ['#C89B8B', '#8B9BA8'], // Warm Beige to Cool Gray
+        ['#8B9BA8', '#9B8B7B'], // Cool Gray to Warm Gray
+        ['#A47B6B', '#7BA893'], // Warm Brown to Sage Green
     ];
 
     // Gradient animation state
     let gradientState = {
-        currentColors: ['#FF0000', '#FF7F00'],
+        currentColors: ['#D84E4E', '#D97D3A'],
         currentAngle: 0,
         isAnimating: false,
         animationFrameId: null
@@ -67,7 +70,7 @@
                 const elapsed = Date.now() - startTime;
                 const progress = Math.min(elapsed / duration, 1);
                 
-                // 색상 보간 (RGB 값을 직접 계산하는 방식으로 변경)
+                // 색상 보간 (RGB 값을 직접 계산하는 방식)
                 const currentColors = interpolateColors(startColors, targetColors, progress);
                 const currentAngle = startAngle + (targetAngle - startAngle) * progress;
 
@@ -161,7 +164,7 @@
             handleUserInteraction();
         });
 
-        // 초기 그라디언트 설정 및 애니메이션 시작
+        // 초기 그라��언트 설정 및 애니메이션 시작
         setGradient(gradientState.currentColors, gradientState.currentAngle);
         smoothGradientAnimation();
     }
