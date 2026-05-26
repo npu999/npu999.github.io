@@ -1,5 +1,5 @@
 /**
- * National Pigeon Unity - Main JavaScript
+ * NPU(전국비둘기연합) - Main JavaScript
  * Minimal & Clean - Link tracking and keyboard navigation + Dynamic Rainbow Gradient
  */
 
