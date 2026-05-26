@@ -26,6 +26,7 @@ body {
     align-items: flex-start;
     padding: 20px;
     transition: background 0.5s ease;
+    padding-top: 20px;
 }
 
 /* ========================================
@@ -189,12 +190,7 @@ body {
 @media (max-width: 360px) {
     body {
         padding: 12px;
-        align-items: flex-start;
-        padding-top: 20px;
-    }
-
-    .container {
-        padding: 0;
+        padding-top: 15px;
     }
 
     .header {
@@ -235,12 +231,7 @@ body {
 @media (min-width: 361px) and (max-width: 480px) {
     body {
         padding: 15px;
-        align-items: flex-start;
-        padding-top: 20px;
-    }
-
-    .container {
-        padding: 0;
+        padding-top: 15px;
     }
 
     .header {
@@ -281,13 +272,11 @@ body {
 @media (min-width: 481px) and (max-width: 768px) {
     body {
         padding: 18px;
-        align-items: flex-start;
-        padding-top: 20px;
+        padding-top: 15px;
     }
 
     .container {
         max-width: 480px;
-        padding: 0;
     }
 
     .header {
@@ -322,13 +311,11 @@ body {
 @media (min-width: 769px) {
     body {
         padding: 20px;
-        align-items: flex-start;
         padding-top: 20px;
     }
 
     .container {
         max-width: 500px;
-        padding: 0;
     }
 
     .header {
