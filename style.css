@@ -10,19 +10,22 @@
 html, body {
     width: 100%;
     height: 100%;
+    overflow-x: hidden;
 }
 
 /* 배경 이미지 변경하는 곳 */
 body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
     color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
+    padding: 15px;
     transition: background 0.5s ease;
 }
 
@@ -35,6 +38,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-height: 100vh;
+    overflow-y: auto;
+    padding: 20px 0;
 }
 
 /* ========================================
@@ -44,16 +50,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     animation: fadeIn 0.6s ease-in-out;
+    flex-shrink: 0;
 }
 
 .profile-img {
-    width: 180px;
-    height: 180px;
+    width: 140px;
+    height: 140px;
     border-radius: 0;
     object-fit: cover;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     border: none;
     transition: transform 0.3s ease;
@@ -64,7 +71,7 @@ body {
 }
 
 .profile-name {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
     text-align: center;
     color: white;
@@ -78,14 +85,15 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 40px;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-grow: 1;
 }
 
 .links-section {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     width: 100%;
 }
 
@@ -94,12 +102,12 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 16px 24px;
+    padding: 13px 20px;
     background-color: rgba(255, 255, 255, 0.95);
     border: 2px solid transparent;
     border-radius: 12px;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     color: #333;
     cursor: pointer;
@@ -107,6 +115,7 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 .link-button::before {
@@ -147,8 +156,9 @@ body {
     text-align: center;
     color: rgba(255, 255, 255, 0.8);
     font-size: 12px;
-    padding-top: 20px;
+    padding-top: 15px;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
 }
 
 /* ========================================
@@ -180,7 +190,104 @@ body {
 /* ========================================
    Mobile First & Responsive Design
    ======================================== */
-@media (max-width: 480px) {
+@media (max-width: 360px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 15px 0;
+    }
+
+    .header {
+        margin-bottom: 20px;
+    }
+
+    .profile-img {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 12px;
+    }
+
+    .profile-name {
+        font-size: 20px;
+    }
+
+    .main {
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+
+    .links-section {
+        gap: 8px;
+    }
+
+    .link-button {
+        padding: 11px 18px;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+
+    .footer {
+        font-size: 11px;
+        padding-top: 12px;
+    }
+}
+
+@media (min-width: 361px) and (max-width: 480px) {
+    body {
+        padding: 12px;
+    }
+
+    .container {
+        padding: 15px 0;
+    }
+
+    .header {
+        margin-bottom: 25px;
+    }
+
+    .profile-img {
+        width: 130px;
+        height: 130px;
+        margin-bottom: 14px;
+    }
+
+    .profile-name {
+        font-size: 22px;
+    }
+
+    .main {
+        gap: 9px;
+        margin-bottom: 18px;
+    }
+
+    .links-section {
+        gap: 9px;
+    }
+
+    .link-button {
+        padding: 12px 19px;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+
+    .footer {
+        font-size: 11px;
+        padding-top: 12px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .container {
+        max-width: 480px;
+        padding: 20px 0;
+    }
+
+    .header {
+        margin-bottom: 35px;
+    }
+
     .profile-img {
         width: 150px;
         height: 150px;
@@ -188,40 +295,61 @@ body {
     }
 
     .profile-name {
-        font-size: 24px;
-    }
-
-    .link-button {
-        padding: 14px 20px;
-        font-size: 15px;
-        border-radius: 10px;
-    }
-
-    .header {
-        margin-bottom: 32px;
+        font-size: 26px;
     }
 
     .main {
-        gap: 10px;
+        gap: 11px;
+        margin-bottom: 25px;
     }
 
     .links-section {
-        gap: 10px;
+        gap: 11px;
+    }
+
+    .link-button {
+        padding: 14px 22px;
+        font-size: 15px;
     }
 }
 
-@media (min-width: 481px) and (max-width: 768px) {
+@media (min-width: 769px) {
     .container {
-        max-width: 480px;
+        max-width: 500px;
+        padding: 20px 0;
+    }
+
+    .header {
+        margin-bottom: 40px;
     }
 
     .profile-img {
-        width: 160px;
-        height: 160px;
+        width: 180px;
+        height: 180px;
+        margin-bottom: 20px;
     }
 
     .profile-name {
-        font-size: 30px;
+        font-size: 28px;
+    }
+
+    .main {
+        gap: 12px;
+        margin-bottom: 40px;
+    }
+
+    .links-section {
+        gap: 12px;
+    }
+
+    .link-button {
+        padding: 16px 24px;
+        font-size: 16px;
+    }
+
+    .footer {
+        font-size: 12px;
+        padding-top: 20px;
     }
 }
 
