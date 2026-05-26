@@ -10,7 +10,7 @@
 html, body {
     width: 100%;
     height: 100%;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 /* 배경 이미지 변경하는 곳 */
@@ -24,8 +24,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    padding: 15px;
+    height: 100vh;
+    padding: 0;
     transition: background 0.5s ease;
 }
 
@@ -38,9 +38,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-height: 100vh;
+    height: 100vh;
     overflow-y: auto;
-    padding: 20px 0;
+    padding: 20px;
 }
 
 /* ========================================
@@ -191,16 +191,52 @@ body {
    Mobile First & Responsive Design
    ======================================== */
 @media (max-width: 360px) {
-    body {
-        padding: 10px;
-    }
-
     .container {
-        padding: 15px 0;
+        padding: 12px;
     }
 
     .header {
-        margin-bottom: 20px;
+        margin-bottom: 18px;
+    }
+
+    .profile-img {
+        width: 110px;
+        height: 110px;
+        margin-bottom: 10px;
+    }
+
+    .profile-name {
+        font-size: 18px;
+    }
+
+    .main {
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .links-section {
+        gap: 8px;
+    }
+
+    .link-button {
+        padding: 11px 16px;
+        font-size: 13px;
+        border-radius: 10px;
+    }
+
+    .footer {
+        font-size: 10px;
+        padding-top: 10px;
+    }
+}
+
+@media (min-width: 361px) and (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+
+    .header {
+        margin-bottom: 22px;
     }
 
     .profile-img {
@@ -214,60 +250,16 @@ body {
     }
 
     .main {
-        gap: 8px;
+        gap: 9px;
         margin-bottom: 15px;
     }
 
     .links-section {
-        gap: 8px;
-    }
-
-    .link-button {
-        padding: 11px 18px;
-        font-size: 14px;
-        border-radius: 10px;
-    }
-
-    .footer {
-        font-size: 11px;
-        padding-top: 12px;
-    }
-}
-
-@media (min-width: 361px) and (max-width: 480px) {
-    body {
-        padding: 12px;
-    }
-
-    .container {
-        padding: 15px 0;
-    }
-
-    .header {
-        margin-bottom: 25px;
-    }
-
-    .profile-img {
-        width: 130px;
-        height: 130px;
-        margin-bottom: 14px;
-    }
-
-    .profile-name {
-        font-size: 22px;
-    }
-
-    .main {
-        gap: 9px;
-        margin-bottom: 18px;
-    }
-
-    .links-section {
         gap: 9px;
     }
 
     .link-button {
-        padding: 12px 19px;
+        padding: 12px 18px;
         font-size: 14px;
         border-radius: 10px;
     }
@@ -281,34 +273,34 @@ body {
 @media (min-width: 481px) and (max-width: 768px) {
     .container {
         max-width: 480px;
-        padding: 20px 0;
+        padding: 18px;
     }
 
     .header {
-        margin-bottom: 35px;
+        margin-bottom: 28px;
     }
 
     .profile-img {
-        width: 150px;
-        height: 150px;
-        margin-bottom: 16px;
+        width: 140px;
+        height: 140px;
+        margin-bottom: 14px;
     }
 
     .profile-name {
-        font-size: 26px;
+        font-size: 24px;
     }
 
     .main {
-        gap: 11px;
-        margin-bottom: 25px;
+        gap: 10px;
+        margin-bottom: 20px;
     }
 
     .links-section {
-        gap: 11px;
+        gap: 10px;
     }
 
     .link-button {
-        padding: 14px 22px;
+        padding: 13px 20px;
         font-size: 15px;
     }
 }
@@ -316,40 +308,40 @@ body {
 @media (min-width: 769px) {
     .container {
         max-width: 500px;
-        padding: 20px 0;
+        padding: 20px;
     }
 
     .header {
-        margin-bottom: 40px;
+        margin-bottom: 30px;
     }
 
     .profile-img {
-        width: 180px;
-        height: 180px;
-        margin-bottom: 20px;
+        width: 140px;
+        height: 140px;
+        margin-bottom: 15px;
     }
 
     .profile-name {
-        font-size: 28px;
+        font-size: 24px;
     }
 
     .main {
-        gap: 12px;
-        margin-bottom: 40px;
+        gap: 10px;
+        margin-bottom: 20px;
     }
 
     .links-section {
-        gap: 12px;
+        gap: 10px;
     }
 
     .link-button {
-        padding: 16px 24px;
-        font-size: 16px;
+        padding: 13px 20px;
+        font-size: 15px;
     }
 
     .footer {
         font-size: 12px;
-        padding-top: 20px;
+        padding-top: 15px;
     }
 }
 
