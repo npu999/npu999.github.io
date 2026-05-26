@@ -50,6 +50,8 @@
         function setGradient(colors, angle) {
             document.body.style.background = `linear-gradient(${angle}deg, ${colors[0]} 0%, ${colors[1]} 100%)`;
             document.body.style.backgroundAttachment = 'fixed';
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundPosition = 'center';
         }
 
         function getRandomAngle() {
